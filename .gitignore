@@ -1,0 +1,133 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# TensorFlow / ML
+*.h5
+*.hdf5
+*.pb
+*.ckpt
+*.ckpt.*
+*.pth
+*.pt
+saved_model/
+checkpoints/
+logs/
+tensorboard/
+
+# Data files
+*.csv
+*.tsv
+*.dat
+*.log
+*.sqlite
+*.db
+
+# Models directory (keep structure, ignore contents)
+models/*
+!models/.gitkeep
+
+# Data directory (keep structure, ignore large datasets)
+data/*
+!data/.gitkeep
+!data/README.md
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Testing
+.tox/
+.nox/
+.cache
+nosetests.xml
+coverage/
+*.cover
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.~*
+
+# Documentation builds
+docs/_build/
+site/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Profiling data
+*.prof
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Claude Code
+.claude/

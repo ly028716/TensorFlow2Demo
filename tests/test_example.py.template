@@ -1,0 +1,230 @@
+"""
+测试模板 - 用于创建新测试的模板文件
+
+复制此文件并重命名为 test_your_module.py，然后根据需要修改
+"""
+
+import unittest
+import tensorflow as tf
+import numpy as np
+import sys
+import os
+
+# 添加项目根目录到路径
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
+class TestYourFeature(unittest.TestCase):
+    """
+    测试您的功能
+    
+    这个类包含测试某个特定功能的所有测试方法
+    """
+
+    def setUp(self):
+        """
+        在每个测试方法运行前执行
+        
+        用于设置测试环境，例如：
+        - 设置随机种子
+        - 创建测试数据
+        - 初始化模型
+        """
+        # 设置随机种子确保可重复性
+        tf.random.set_seed(42)
+        np.random.seed(42)
+        
+        # 创建测试数据（示例）
+        self.test_data = np.random.randn(10, 5).astype(np.float32)
+        self.test_labels = np.random.randint(0, 2, 10)
+
+    def tearDown(self):
+        """
+        在每个测试方法运行后执行
+        
+        用于清理测试环境，例如：
+        - 清除TensorFlow会话
+        - 删除临时文件
+        - 释放资源
+        """
+        # 清除Keras会话
+        tf.keras.backend.clear_session()
+
+    def test_basic_functionality(self):
+        """
+        测试基本功能
+        
+        测试描述：验证基本功能是否正常工作
+        """
+        # 1. 准备测试数据
+        input_data = tf.constant([1, 2, 3, 4, 5])
+        
+        # 2. 执行要测试的操作
+        result = tf.reduce_sum(input_data)
+        
+        # 3. 验证结果
+        expected = 15
+        self.assertEqual(result.numpy(), expected)
+
+    def test_tensor_operations(self):
+        """
+        测试张量操作
+        
+        测试描述：验证张量操作的正确性
+        """
+        # 创建张量
+        a = tf.constant([[1, 2], [3, 4]], dtype=tf.float32)
+        b = tf.constant([[5, 6], [7, 8]], dtype=tf.float32)
+        
+        # 执行操作
+        c = tf.add(a, b)
+        
+        # 验证结果
+        expected = np.array([[6, 8], [10, 12]], dtype=np.float32)
+        np.testing.assert_array_equal(c.numpy(), expected)
+
+    def test_model_creation(self):
+        """
+        测试模型创建
+        
+        测试描述：验证模型能够正确创建
+        """
+        # 创建模型
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(10, activation='relu', input_shape=(5,)),
+            tf.keras.layers.Dense(1, activation='sigmoid')
+        ])
+        
+        # 验证模型结构
+        self.assertEqual(len(model.layers), 2)
+        self.assertEqual(model.layers[0].units, 10)
+        self.assertEqual(model.layers[1].units, 1)
+
+    def test_model_training(self):
+        """
+        测试模型训练
+        
+        测试描述：验证模型能够正常训练
+        """
+        # 创建简单数据
+        X = np.random.randn(100, 5).astype(np.float32)
+        y = np.random.randint(0, 2, (100, 1)).astype(np.float32)
+        
+        # 创建模型
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(10, activation='relu', input_shape=(5,)),
+            tf.keras.layers.Dense(1, activation='sigmoid')
+        ])
+        
+        # 编译模型
+        model.compile(
+            optimizer='adam',
+            loss='binary_crossentropy',
+            metrics=['accuracy']
+        )
+        
+        # 训练模型
+        history = model.fit(X, y, epochs=2, verbose=0)
+        
+        # 验证训练历史
+        self.assertIn('loss', history.history)
+        self.assertIn('accuracy', history.history)
+        self.assertEqual(len(history.history['loss']), 2)
+
+    def test_edge_cases(self):
+        """
+        测试边界情况
+        
+        测试描述：验证边界情况的处理
+        """
+        # 测试空张量
+        empty_tensor = tf.constant([])
+        self.assertEqual(empty_tensor.shape[0], 0)
+        
+        # 测试单元素张量
+        single_element = tf.constant([42])
+        self.assertEqual(single_element.shape[0], 1)
+        self.assertEqual(single_element.numpy()[0], 42)
+
+    def test_error_handling(self):
+        """
+        测试错误处理
+        
+        测试描述：验证错误情况能够正确处理
+        """
+        # 测试应该抛出异常的情况
+        with self.assertRaises(ValueError):
+            # 这里放置应该抛出ValueError的代码
+            tf.reshape(tf.constant([1, 2, 3]), (2, 2))  # 形状不匹配
+
+    def test_with_different_data_types(self):
+        """
+        测试不同数据类型
+        
+        测试描述：验证函数能处理不同的数据类型
+        """
+        # 测试float32
+        float32_tensor = tf.constant([1.0, 2.0, 3.0], dtype=tf.float32)
+        self.assertEqual(float32_tensor.dtype, tf.float32)
+        
+        # 测试int32
+        int32_tensor = tf.constant([1, 2, 3], dtype=tf.int32)
+        self.assertEqual(int32_tensor.dtype, tf.int32)
+
+
+class TestAnotherFeature(unittest.TestCase):
+    """
+    测试另一个功能
+    
+    您可以在同一个文件中创建多个测试类
+    每个类测试一个相关的功能集
+    """
+
+    def test_something_else(self):
+        """测试其他功能"""
+        # 您的测试代码
+        pass
+
+
+# 常用断言方法参考
+"""
+相等性断言：
+- self.assertEqual(a, b)           # a == b
+- self.assertNotEqual(a, b)        # a != b
+- self.assertAlmostEqual(a, b)     # round(a-b, 7) == 0
+
+真值断言：
+- self.assertTrue(x)               # bool(x) is True
+- self.assertFalse(x)              # bool(x) is False
+- self.assertIsNone(x)             # x is None
+- self.assertIsNotNone(x)          # x is not None
+
+类型断言：
+- self.assertIsInstance(a, b)      # isinstance(a, b)
+- self.assertNotIsInstance(a, b)   # not isinstance(a, b)
+
+比较断言：
+- self.assertGreater(a, b)         # a > b
+- self.assertGreaterEqual(a, b)    # a >= b
+- self.assertLess(a, b)            # a < b
+- self.assertLessEqual(a, b)       # a <= b
+
+容器断言：
+- self.assertIn(a, b)              # a in b
+- self.assertNotIn(a, b)           # a not in b
+
+异常断言：
+- with self.assertRaises(SomeException):
+      do_something()
+
+NumPy数组断言：
+- np.testing.assert_array_equal(a, b)
+- np.testing.assert_array_almost_equal(a, b, decimal=5)
+- np.testing.assert_allclose(a, b, rtol=1e-5)
+"""
+
+
+if __name__ == '__main__':
+    # 运行此文件中的所有测试
+    unittest.main()
+

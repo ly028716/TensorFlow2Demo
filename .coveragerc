@@ -1,0 +1,39 @@
+# Coverage.py配置文件
+
+[run]
+# 要测量覆盖率的源代码目录
+source = .
+
+# 忽略的文件或目录
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */venv/*
+    */.venv/*
+    */env/*
+    */site-packages/*
+    setup.py
+    demo.py
+
+[report]
+# 报告中排除的行
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+
+# 显示缺失的行号
+show_missing = True
+
+# 精度
+precision = 2
+
+[html]
+# HTML报告输出目录
+directory = htmlcov
+
